@@ -20,16 +20,6 @@
 
 ---
 
-##  Workflow & Pipeline
-
-본 프로젝트는 데이터 수집부터 영상 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
-
-'''mermaid
-graph LR
-    A[Data Collection<br>e-Museum] --> B[Preprocessing<br>Crop & Captioning]
-    B --> C[LoRA Fine-tuning<br>Stable Diffusion]
-    C --> D[Inference<br>Text-to-Image]
-    D --> E[Image-to-Video<br>SVD via ComfyUI]'''
 
 
 ##  Dataset Preparation (데이터 제작 과정) 
@@ -65,3 +55,14 @@ graph LR
     * `batch_size`: 1
     * `max_train_steps`: 1500
     * `mixed_precision`: fp16
+ 
+    * ## 🚀 Workflow & Pipeline
+
+본 프로젝트는 데이터 수집부터 영상 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
+
+```mermaid
+graph LR
+    A[Data Collection<br>e-Museum] --> B[Preprocessing<br>Crop & Captioning]
+    B --> C[LoRA Fine-tuning<br>Stable Diffusion]
+    C --> D[Inference<br>Text-to-Image]
+    D --> E[Image-to-Video<br>SVD via ComfyUI]
