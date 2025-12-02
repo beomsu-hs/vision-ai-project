@@ -40,6 +40,12 @@
     * *Before (BLIP):* "A tiger standing next to a tree."
     * *After (Custom):* "**minhwa style**, a humorous tiger with big eyes, standing next to a pine tree, traditional korean paper texture, old paper background."
 
+### 4. Image-to-Video (ComfyUI)
+생성된 정적 이미지를 움직이는 영상으로 만들기 위해 **ComfyUI**와 **SVD (Stable Video Diffusion)** 모델을 사용했습니다.
+
+* **Workflow:** `results/svd_workflow.json` (워크플로우 파일 참조)
+* **Settings:** 1024x576 Resolution, 25 Frames, Motion Bucket ID 127.
+
 ---
 
 ##  Training (학습 정보)
@@ -54,12 +60,6 @@
     * `max_train_steps`: 1500
     * `mixed_precision`: fp16
  
-### 2. Image-to-Video (ComfyUI)
-생성된 정적 이미지를 움직이는 영상으로 만들기 위해 **ComfyUI**와 **SVD (Stable Video Diffusion)** 모델을 사용했습니다.
-
-* **Workflow:** `results/svd_workflow.json` (워크플로우 파일 참조)
-* **Settings:** 1024x576 Resolution, 25 Frames, Motion Bucket ID 127.
-
 ---
 
 ##  Model Card (System Card)
@@ -68,7 +68,7 @@
 * **Model Name:** Minhwa-Style-LoRA-v1
 * **Architecture:** Stable Diffusion v1.5 based LoRA
 * **License:** CreativeML Open RAIL-M
-* **Developed by:** (Your Name / Team Name)
+* **Developed by:** 한성대학교 김범수
  
 ## 🚀 Workflow & Pipeline
 
