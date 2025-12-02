@@ -24,7 +24,7 @@
 
 본 프로젝트는 데이터 수집부터 영상 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
 
-```mermaid
+mermaid
 graph LR
     A[Data Collection<br>e-Museum] --> B[Preprocessing<br>Crop & Captioning]
     B --> C[LoRA Fine-tuning<br>Stable Diffusion]
@@ -45,7 +45,7 @@ graph LR
 
 ### 3. Custom Captioning (캡션 제작)
 단순 자동 캡션이 아닌, 스타일 학습을 위한 정교한 캡션을 직접 작성했습니다.
-* **Trigger word:** minwha style(이 단어를 프롬프트에 포함해야 작동합니다)
+* **Trigger word:** minhwa style(이 단어를 프롬프트에 포함해야 작동합니다)
 * **Process:** `BLIP` 모델 초안 생성 -> **사람이 직접 수정(Human-in-the-loop)**
 * **Format:** `[Trigger Word], [Subject], [Background], [Style Description]`
 * **Example:**
@@ -57,7 +57,7 @@ graph LR
 ##  Training (학습 정보)
 
 * **Base model:** runwayml/stable-diffusion-v1-5
-* **Mothod:** LoRA (Low-Rank Adaptation) via Kohya_ss
+* **Method:** LoRA (Low-Rank Adaptation) via Kohya_ss
 * **Environment:** NVIDIA RTX 4060 Laptop (8GB VRAM)
 * **Train Script:** `diffusers` examples or `kohya_ss`
 * **Hyperparameters:**
