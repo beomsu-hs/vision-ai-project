@@ -54,6 +54,22 @@
     * `max_train_steps`: 1500
     * `mixed_precision`: fp16
  
+### 2. Image-to-Video (ComfyUI)
+생성된 정적 이미지를 움직이는 영상으로 만들기 위해 **ComfyUI**와 **SVD (Stable Video Diffusion)** 모델을 사용했습니다.
+
+* **Workflow:** `results/svd_workflow.json` (워크플로우 파일 참조)
+* **Settings:** 1024x576 Resolution, 25 Frames, Motion Bucket ID 127.
+
+---
+
+##  Model Card (System Card)
+
+### Model Details
+* **Model Name:** Minhwa-Style-LoRA-v1
+* **Architecture:** Stable Diffusion v1.5 based LoRA
+* **License:** CreativeML Open RAIL-M
+* **Developed by:** (Your Name / Team Name)
+ 
 ## 🚀 Workflow & Pipeline
 
 본 프로젝트는 데이터 수집부터 영상 생성까지 총 5단계의 파이프라인으로 구성되어 있습니다.
