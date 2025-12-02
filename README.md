@@ -29,7 +29,8 @@ graph LR
     A[Data Collection<br>e-Museum] --> B[Preprocessing<br>Crop & Captioning]
     B --> C[LoRA Fine-tuning<br>Stable Diffusion]
     C --> D[Inference<br>Text-to-Image]
-    D --> E[Image-to-Video<br>SVD via ComfyUI]
+    D --> E[Image-to-Video<br>SVD via ComfyUI]```
+
 
 ##  Dataset Preparation (데이터 제작 과정) 
 본 프로젝트의 핵심은 **고품질의 자체 데이터셋 구축**에 있습니다.
