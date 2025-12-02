@@ -6,17 +6,17 @@
 ![Diffusers](https://img.shields.io/badge/HuggingFace-Diffusers-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## 📖 Project Overview (프로젝트 개요)
-이 프로젝트는 한국의 전통 예술인 **'민화(Minhwa)'**의 화풍을 학습한 생성형 AI 모델입니다.
+##  Project Overview (프로젝트 개요)
+이 프로젝트는 한국의 전통 예술인 '민화'의 화풍을 학습한 생성형 AI 모델입니다.
 Foundation Model인 **Stable Diffusion**에 **LoRA(Low-Rank Adaptation)** 기술을 적용하여, 적은 데이터로도 고유의 붓터치와 색감을 재현하는 것을 목표로 합니다.
 
-### 🎯 Motivation (설정 이유 및 목표)
+###  Motivation (설정 이유 및 목표)
 * **문제 의식:** 기존의 Text-to-Image 모델들은 서양화풍에는 강하지만, 한국적인 화풍(특히 민화의 질감, 오방색 등)을 정확히 구현하는 데 한계가 있습니다.
 * **목표:** 공공 데이터를 활용하여 저작권 문제없는 한국형 이미지 생성 모델을 구축하고, 누구나 쉽게 한국적 디자인을 창작하도록 돕습니다.
 
 ---
 
-## 🤖 Model Details (모델 상세 - System Card)
+##  Model Details (모델 상세 - System Card)
 
 ### Model Description
 * **Base Model:** [runwayml/stable-diffusion-v1-5](https://huggingface.co/runwayml/stable-diffusion-v1-5)
@@ -32,7 +32,7 @@ Foundation Model인 **Stable Diffusion**에 **LoRA(Low-Rank Adaptation)** 기술
 
 ---
 
-## 💾 Dataset Preparation (데이터 제작 과정) - **Core Part**
+##  Dataset Preparation (데이터 제작 과정) - **Core Part**
 본 프로젝트는 **고품질의 자체 데이터셋 구축**에 중점을 두었습니다.
 
 ### 1. Data Collection (수집)
@@ -51,7 +51,7 @@ Foundation Model인 **Stable Diffusion**에 **LoRA(Low-Rank Adaptation)** 기술
 
 ---
 
-## ⚙️ Training Procedure (학습 과정)
+##  Training Procedure (학습 과정)
 
 * **Environment:** Google Colab (T4 GPU)
 * **Library:** Hugging Face `diffusers`, `peft`
@@ -63,7 +63,7 @@ Foundation Model인 **Stable Diffusion**에 **LoRA(Low-Rank Adaptation)** 기술
 
 ---
 
-## 📊 Evaluation & Results (결과 및 평가)
+##  Evaluation & Results (결과 및 평가)
 
 ### Qualitative Analysis (정성 평가)
 | Prompt | Base Model (SD 1.5) | Ours (Minhwa LoRA) |
@@ -79,7 +79,7 @@ Foundation Model인 **Stable Diffusion**에 **LoRA(Low-Rank Adaptation)** 기술
 
 ---
 
-## 🚀 How to Run (실행 방법)
+##  How to Run (실행 방법)
 
 ```python
 from diffusers import StableDiffusionPipeline
