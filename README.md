@@ -30,3 +30,37 @@ graph LR
     B --> C[LoRA Fine-tuning<br>Stable Diffusion]
     C --> D[Inference<br>Text-to-Image]
     D --> E[Image-to-Video<br>SVD via ComfyUI]
+
+##  Dataset Preparation (데이터 제작 과정) 
+본 프로젝트의 핵심은 **고품질의 자체 데이터셋 구축**에 있습니다.
+
+### 1. Data Collection (수집)
+* **Source:** [e-뮤지엄](https://www.emuseum.go.kr/), [국립중앙박물관](https://www.museum.go.kr/)
+* **Selection:** 저작권 문제가 없는 **'공공누리 제1유형(출처표시)'** 및 **'저작권 만료'** 민화 이미지 50장을 엄선했습니다. (주로 화조도, 작호도)
+
+### 2. Preprocessing (전처리)
+* **Resizing:** 학습 효율을 위해 모든 이미지를 `512x512` 픽셀로 Center Crop 및 Resize.
+* **Cleaning:** 찢어지거나 오염이 심한 부분은 포토샵으로 일부 보정.
+
+### 3. Custom Captioning (캡션 제작)
+단순 자동 캡션이 아닌, 스타일 학습을 위한 정교한 캡션을 직접 작성했습니다.
+* **Trigger word:** minwha style(이 단어를 프롬프트에 포함해야 작동합니다)
+* **Process:** `BLIP` 모델 초안 생성 -> **사람이 직접 수정(Human-in-the-loop)**
+* **Format:** `[Trigger Word], [Subject], [Background], [Style Description]`
+* **Example:**
+    * *Before (BLIP):* "A tiger standing next to a tree."
+    * *After (Custom):* "**minhwa style**, a humorous tiger with big eyes, standing next to a pine tree, traditional korean paper texture, old paper background."
+
+---
+
+##  Training (학습 정보)
+
+* **Base model:** runwayml/stable-diffusion-v1-5
+* **Mothod:** LoRA (Low-Rank Adaptation) via Kohya_ss
+* **Environment:** NVIDIA RTX 4060 Laptop (8GB VRAM)
+* **Train Script:** `diffusers` examples or `kohya_ss`
+* **Hyperparameters:**
+    * `learning_rate`: 1e-4
+    * `batch_size`: 1
+    * `max_train_steps`: 1500
+    * `mixed_precision`: fp16
