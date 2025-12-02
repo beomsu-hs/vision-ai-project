@@ -20,8 +20,6 @@
 
 ---
 
-
-
 ##  Dataset Preparation (데이터 제작 과정) 
 본 프로젝트의 핵심은 **고품질의 자체 데이터셋 구축**에 있습니다.
 
@@ -56,7 +54,7 @@
     * `max_train_steps`: 1500
     * `mixed_precision`: fp16
  
-    * ## 🚀 Workflow & Pipeline
+## 🚀 Workflow & Pipeline
 
 본 프로젝트는 데이터 수집부터 영상 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
 
