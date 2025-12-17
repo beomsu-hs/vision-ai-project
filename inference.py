@@ -1,53 +1,73 @@
 import torch
 from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
-import os
+from deep_translator import GoogleTranslator
 
 # ================= 설정값 =================
-lora_path = "./model/minhwa_v1.safetensors" 
-negative_prompt = "low quality, worst quality, blurry, distorted, ugly, watermark, text, human face, realistic photo"
+lora_path = "./model/minhwa_v1.safetensors"
 
-# 테스트할 프롬프트 리스트
-test_prompts = [
-    # 1. [퓨전] 민화 스타일의 스포츠카
-    ("sports_car", "minhwa style, a red sports car driving on a mountain road, pine trees, stylized clouds, traditional ink painting"),
-    
-    # 2. [퓨전] 민화 스타일의 아이언맨 (로봇)
-    ("iron_man", "minhwa style, a mechanical armor hero standing on a scholar's rock, red and gold metal armor, tiger skin pattern cape, fierce pose"),
-    
-    # 3. [동물] 용 (Dragon) - 호랑이 친구
-    ("dragon", "minhwa style, a mystical blue dragon flying in the clouds, holding a magic pearl, traditional korean art"),
-    
-    # 4. [사물] 스타벅스 커피 (찻잔)
-    ("coffee", "minhwa style, a cup of coffee on a wooden table, peony flowers background, steam rising, vintage paper texture"),
-    
-    # 5. [풍경] 서울 N타워
-    ("seoul_tower", "minhwa style, N Seoul Tower on top of Namsan mountain, pine trees, cherry blossoms, flat perspective")
+# 1. 퀄리티를 깎아먹는 요소들을 강력하게 차단하는 네거티브 프롬프트
+negative_prompt = (
+    "low quality, worst quality, sketch, blurry, ugly, distorted, "
+    "photorealistic, 3d render, cgi, modern city, smooth, shiny metal, "
+    "text, watermark, human face, flesh, mutations, deformed, bad anatomy"
+)
+
+# 2. 테스트할 프롬프트 
+user_inputs = [
+    ("Eiffel Tower", "산수화 풍경 속에 우뚝 솟은 에펠탑")
+
 ]
-# ==========================================
 
-print(" 모델 로드 중...")
+# 3. 퀄리티 강제 향상 (자동으로 뒤에 붙음)
+cheat_code_suffix = ", minhwa style, (masterpiece, best quality:1.4), (intricate details:1.2), (traditional korean ink painting:1.3), (hanji paper texture:1.3), rough brush strokes, flat perspective, vivid colors"
+# =================================================
+
+print("모델 로드 중...")
 model_id = "runwayml/stable-diffusion-v1-5"
 pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
-pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+
+#  스케줄러 업그레이드 (DPM++ 2M SDE Karras)
+pipe.scheduler = DPMSolverMultistepScheduler.from_config(
+    pipe.scheduler.config,
+    use_karras_sigmas=True,
+    algorithm_type="sde-dpmsolver++"
+)
 pipe.to("cuda")
 
 print(f" LoRA 로드 중: {lora_path}")
 pipe.load_lora_weights(lora_path)
 
-print(f" 총 {len(test_prompts)}장의 이미지를 생성합니다.\n")
+translator = GoogleTranslator(source='ko', target='en')
 
-for name, prompt in test_prompts:
-    print(f" 생성 중: {name}...")
+print(f" 총 {len(user_inputs)}장의 '고화질' 이미지를 생성합니다.\n")
+
+for name, korean_prompt in user_inputs:
+    
+    print(f" 번역 중: '{korean_prompt}'")
+    try:
+        translated_prompt = translator.translate(korean_prompt)
+    except Exception as e:
+        print(" 번역 실패! 기본 영어 프롬프트를 사용합니다.")
+        translated_prompt = "minhwa art"
+        
+    print(f"   ㄴ 영어: '{translated_prompt}'")
+
+    final_prompt = translated_prompt + cheat_code_suffix
+    
+    print(f"▶ 그리는 중... (해상도: 512x768)")
+
     image = pipe(
-        prompt,
+        final_prompt,
         negative_prompt=negative_prompt,
-        num_inference_steps=30,
-        guidance_scale=7.5,
-        cross_attention_kwargs={"scale": 1.0} # 강도 조절
+        width=512,              # 너비
+        height=768,             # 높이 (세로로 길게 -> 민화 구도 최적화)
+        num_inference_steps=40, # 붓질 횟수 증가 (30 -> 40)
+        guidance_scale=8.0,     # 프롬프트 충실도 상향
+        cross_attention_kwargs={"scale": 0.9} # LoRA 강도 (너무 세면 깨져서 0.9로 미세 조정)
     ).images[0]
     
-    save_name = f"test_{name}.png"
+    save_name = f"result_pro_{name}.png"
     image.save(save_name)
-    print(f"  저장 완료: {save_name}")
+    print(f" 저장 완료: {save_name}\n")
 
-print("\n 모든 테스트가 완료되었습니다!")
+print("고화질 작업 완료!")
