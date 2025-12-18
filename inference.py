@@ -14,7 +14,7 @@ negative_prompt = (
 
 # 2. 테스트할 프롬프트 
 user_inputs = [
-    ("Eiffel Tower", "산수화 풍경 속에 우뚝 솟은 에펠탑")
+    ("dog1", "소나무 아래 앉아있는 강아지")
 
 ]
 
