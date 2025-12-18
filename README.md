@@ -67,8 +67,10 @@
 * **Architecture:** Stable Diffusion v1.5 based LoRA
 * **License:** CreativeML Open RAIL-M
 * **Developed by:** 한성대학교 김범수
- 
-## 🚀 Workflow & Pipeline
+##  Model Download
+*GitHub 용량 제한으로 인해, 학습된 LoRA 모델 파일(`.safetensors`)은 구글 드라이브를 통해 제공합니다.
+**Model File:** [https://drive.google.com/drive/folders/1Z10Bn7zlalyCs5tLW87Q3YimtlVniLV9?usp=sharing]
+##  Workflow & Pipeline
 
 본 프로젝트는 데이터 수집부터 이미지 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
 
