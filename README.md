@@ -42,8 +42,8 @@
     * *After (Custom):* "**minhwa style**, a humorous tiger with big eyes, standing next to a pine tree, traditional korean paper texture, old paper background."
       
 ## Dataset Download
-GitHub 용량 제한으로 인해 전체 데이터셋은 아래 링크에서 제공합니다.
-**Download Link:**[https://drive.google.com/drive/folders/1VCBEBMp0CSpWY6q2vVan95lccLqM1BNP?usp=sharing]
+*GitHub 용량 제한으로 인해 전체 데이터셋은 아래 링크에서 제공합니다.
+*Download Link:* [https://drive.google.com/drive/folders/1VCBEBMp0CSpWY6q2vVan95lccLqM1BNP?usp=sharing]
 ---
 
 ##  Training (학습 정보)
