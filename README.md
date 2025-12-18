@@ -15,8 +15,8 @@
 
 ###  Objective & Motivation
 * **Problem:** 기존 생성 모델(SD 1.5)은 서양 화풍에 편향되어 있어, '한국 호랑이'나 '소나무'를 그릴 때 민화 특유의 해학적 느낌과 붓터치 질감을 살리지 못함.
-* **Solution:** 공공 데이터셋을 활용하여 저작권 문제없는 '민화 전용 LoRA'를 제작하고, 최신 SVD 기술로 생동감을 부여.
-* **Key Tech:** `Stable Diffusion v1.5`, `LoRA`, `Stable Video Diffusion (SVD)`, `High-quality Captioning`.
+* **Solution:** 공공 데이터셋을 활용하여 저작권 문제없는 '민화 전용 LoRA'를 제작
+* **Key Tech:** `Stable Diffusion v1.5`, `LoRA`, `High-quality Captioning`.
 
 ---
 
@@ -29,7 +29,8 @@
 
 ### 2. Preprocessing (전처리)
 * **자동 리사이징:** 원본이 3000픽셀이어도, Kohya가 학습 직전에 메모리에 올리면서 알아서 학습 가능한 크기(예: 384x640 등)로 리사이징합니다.
-* **Cleaning:** 찢어지거나 오염이 심한 부분은 포토샵으로 일부 보정.
+* **Dynamic Resolution Allocation**: 이미지를 자르지 않고, 비율(Ratio)에 따라 가변적인 Bucket 분류하여 학습. 
+
 
 ### 3. Custom Captioning (캡션 제작)
 단순 자동 캡션이 아닌, 스타일 학습을 위한 정교한 캡션을 직접 작성했습니다.
@@ -39,13 +40,10 @@
 * **Example:**
     * *Before (BLIP):* "A tiger standing next to a tree."
     * *After (Custom):* "**minhwa style**, a humorous tiger with big eyes, standing next to a pine tree, traditional korean paper texture, old paper background."
-
-### 4. Image-to-Video (ComfyUI)
-생성된 정적 이미지를 움직이는 영상으로 만들기 위해 **ComfyUI**와 **SVD (Stable Video Diffusion)** 모델을 사용했습니다.
-
-* **Workflow:** `results/svd_workflow.json` (워크플로우 파일 참조)
-* **Settings:** 1024x576 Resolution, 25 Frames, Motion Bucket ID 127.
-
+      
+## Dataset Download
+GitHub 용량 제한으로 인해 전체 데이터셋은 아래 링크에서 제공합니다.
+**Download Link:**[https://drive.google.com/drive/folders/1VCBEBMp0CSpWY6q2vVan95lccLqM1BNP?usp=sharing]
 ---
 
 ##  Training (학습 정보)
@@ -72,11 +70,10 @@
  
 ## 🚀 Workflow & Pipeline
 
-본 프로젝트는 데이터 수집부터 영상 생성까지 총 5단계의 파이프라인으로 구성되어 있습니다.
+본 프로젝트는 데이터 수집부터 이미지 생성까지 총 4단계의 파이프라인으로 구성되어 있습니다.
 
 ```mermaid
 graph LR
     A[Data Collection<br>e-Museum] --> B[Preprocessing<br>Crop & Captioning]
     B --> C[LoRA Fine-tuning<br>Stable Diffusion]
     C --> D[Inference<br>Text-to-Image]
-    D --> E[Image-to-Video<br>SVD via ComfyUI]
